@@ -71,20 +71,20 @@ const categories = [
 export default function Home() {
   return (
     <div className="home-page">
-      {/* Navbar */}
-      <nav className="navbar">
-        <div className="navbar-container">
-          <div className="navbar-logo">🛒 Online Grocery</div>
-          <div className="navbar-categories">
-            {categories.map((cat) => (
-              <Link key={cat} to={`/${cat.toLowerCase().replace(/ & | /g, '-')}`} className="navbar-category">{cat}</Link>
-            ))}
-          </div>
-        </div>
-        <div className="navbar-actions">
+    {/* //   {/* Navbar */}
+       <nav className="navbar">
+         <div className="navbar-container">
+           <div className="navbar-logo">🛒 Online Grocery</div>
+           <div className="navbar-categories">
+             {categories.map((cat) => ( 
+             <Link key={cat} to={`/${cat.toLowerCase().replace(/ & | /g, '-')}`} className="navbar-category">{cat}</Link>
+             ))}
+           </div>
+         </div>
+         <div className="navbar-actions">
           <input type="text" placeholder="Search for products or categories" className="navbar-search" />
           <button className="navbar-btn">🛒</button>
-          <Link to="/login" className="navbar-login">Login</Link>
+           <Link to="/login" className="navbar-login">Login</Link>
         </div>
       </nav>
 
