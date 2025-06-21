@@ -1,0 +1,150 @@
+/* Background with soft blue gradient and subtle wave overlay */
+.login-background {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #9e3636 0%, #576eee 100%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.login-background::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: url('data:image/svg+xml;utf8,<svg width="100%25" height="100%25" viewBox="0 0 1440 560" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="%236a93ff" fill-opacity="0.13" d="M0,320 C360,480 1080,160 1440,320 L1440,560 L0,560 Z"/></svg>') no-repeat bottom center/cover;
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.login-card {
+  background: #2056c7;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  padding: 72px 64px 56px 64px;
+  width: 520px;
+  max-width: 98vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
+.login-icon {
+  margin-bottom: 40px;
+}
+
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.08);
+  border-radius: 6px;
+  padding: 0 ;
+  border: 1.5px solid rgba(255,255,255,0.18);
+}
+
+.input-icon {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.input-group input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #0c0909;
+  padding: 18px 0;
+  width: 100%;
+  font-size: 1.25rem;
+}
+
+.input-group input::placeholder {
+  color: #c7d3f7;
+  opacity: 1;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 18px 0;
+  background: #fff;
+  color: #2056c7;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1.25rem;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.login-btn:hover {
+  background: #e3eaff;
+  color: #143a7b;
+}
+
+.forgot-password {
+  text-align: center;
+  margin-top: 14px;
+}
+
+.forgot-password a {
+  color: #fff;
+  font-size: 1rem;
+  text-decoration: underline;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+.forgot-password a:hover {
+  opacity: 1;
+}
+
+.create-account {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.create-account a {
+  color: #fff;
+  font-size: 1rem;
+  text-decoration: underline;
+  font-weight: 600;
+  opacity: 0.95;
+  transition: color 0.2s, opacity 0.2s;
+}
+
+.create-account a:hover {
+  color: #6a93ff;
+  opacity: 1;
+}
+
+@media (min-width: 1100px) {
+  .login-card {
+    width: 600px;
+    padding: 72px 64px 56px 64px;
+  }
+  .login-form {
+    gap: 28px;
+  }
+  .login-btn, .input-group input {
+    font-size: 1.25rem;
+  }
+}

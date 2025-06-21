@@ -1,0 +1,35 @@
+.page-container {
+  padding: 2em;
+  background: #f9f9f9;
+  min-height: 100vh;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #b71c1c;
+  margin-bottom: 1.5em;
+}
+
+.item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item-list li {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(60, 60, 60, 0.07);
+  margin-bottom: 1em;
+  padding: 1em 1.5em;
+  font-size: 1.1rem;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-list li:last-child {
+  margin-bottom: 0;
+}
