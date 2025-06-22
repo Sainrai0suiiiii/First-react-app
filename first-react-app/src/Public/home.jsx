@@ -1,5 +1,7 @@
 import React from "react";
+import ShoppingList from "../components/shoppingList";
 import '../Css/home.css';
+
 
 const products = [
   {
@@ -56,45 +58,37 @@ const products = [
 
 export default function Home() {
   return (
-    <div className="home-page">
-      {/* Main Content */}
-      <div className="main-content">
-        {/* Product Grid */}
-        <div className="product-grid">
-          <h2 className="product-grid-title">Latest Products</h2>
-          <div className="product-list">
-            {products.map((product) => (
-              <div key={product.id} className="product-card">
-                <span className="product-sale">SALE</span>
-                <img src={product.img} alt={product.name} className="product-img" />
-                <div className="product-title">{product.name}</div>
-                <div className="product-prices">
-                  <span className="product-price">NRs.{product.price}</span>
-                  <span className="product-oldprice">NRs.{product.oldPrice}</span>
-                </div>
-                <div className="product-info">
-                  <span>{product.count} COUNT</span>
-                  <span>{product.size}</span>
-                  <span>{product.age}</span>
-                </div>
-                <div className="product-qty">
-                  <span>Qty</span>
-                  <button className="product-qty-btn">-</button>
-                  <span>1</span>
-                  <button className="product-qty-btn">+</button>
-                </div>
-                <button className="product-add-btn">Add to Shopping list</button>
+    <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+      <div className="product-grid">
+        <h2 className="product-grid-title">Latest Products</h2>
+        <div className="product-list">
+          {products.map((product) => (
+            <div key={product.id} className="product-card">
+              <span className="product-sale">SALE</span>
+              <img src={product.img} alt={product.name} className="product-img" />
+              <div className="product-title">{product.name}</div>
+              <div className="product-prices">
+                <span className="product-price">NRs.{product.price}</span>
+                <span className="product-oldprice">NRs.{product.oldPrice}</span>
               </div>
-            ))}
-          </div>
-        </div>
-        {/* Shopping List Sidebar */}
-        <div className="shopping-list-sidebar">
-          <h3 className="shopping-list-title">Shopping List</h3>
-          <div className="shopping-list-empty">0 items</div>
-          <button className="shopping-list-btn">Create Shopping List</button>
+              <div className="product-info">
+                <span>{product.count} COUNT</span>
+                <span>{product.size}</span>
+                <span>{product.age}</span>
+              </div>
+              <div className="product-qty">
+                <span>Qty</span>
+                <button className="product-qty-btn">-</button>
+                <span>1</span>
+                <button className="product-qty-btn">+</button>
+              </div>
+              <button className="product-add-btn">Add to Shopping list</button>
+            </div>
+          ))}
         </div>
       </div>
+    
+      <ShoppingList />
     </div>
   );
 }

@@ -1,13 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../Css/navbar.css';
+import './navbar.css';
 
 const categories = [
-  "Grocery",
-  "Bakery & Dairy",
-  "Beverage",
-  "Eggs & Meat",
-  "Veg & Fruits",
+  
+  
+  "Home",
+  
 ];
 
 export default function Navbar() {
@@ -16,7 +15,9 @@ export default function Navbar() {
       <div className="navbar-top">
         <div className="navbar-logo-container">
           {/* Replace with your logo image */}
-          <span className="navbar-logo">Online Grocery</span>
+          <Link to="/" className="navbar-logo" style={{ textDecoration: 'none', color: 'inherit' }}>
+            24hrs Online Grocery
+          </Link>
         </div>
         <div className="navbar-search-container">
           <input type="text" placeholder="Search for products or categories" className="navbar-search-input" />
@@ -37,9 +38,23 @@ export default function Navbar() {
       </div>
       <div className="navbar-bottom">
         <div className="navbar-categories">
-          {categories.map((cat) => (
-            <Link key={cat} to={`/${cat.toLowerCase().replace(/ & | /g, '-')}`} className="navbar-category">{cat}</Link>
-          ))}
+          {categories.map((cat) => {
+            const categoryClass = cat.toLowerCase().replace(/ & | /g, '-');
+            return (
+              <Link 
+                key={cat} 
+                to={`/${categoryClass}`} 
+                className={`navbar-category ${categoryClass}`}
+              >
+                {cat}
+              </Link>
+            );
+          })}
+          <Link to="/grocery" className="navbar-category">Grocery</Link>
+          <Link to="/beverage" className="navbar-category">Beverage</Link>
+          <Link to="/veg-fruits" className="navbar-category">Veg & Fruits</Link>
+          <Link to="/eggs-meat" className="navbar-category">Eggs & Meat</Link>
+          <Link to="/dairy" className="navbar-category">Breakery and Dairy</Link>
         </div>
       </div>
     </nav>
