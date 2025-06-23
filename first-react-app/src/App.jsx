@@ -6,6 +6,7 @@ import Beverage from "./pages/beverage";
 import Dairy from "./pages/dairy";
 import EggsMeat from "./pages/EggsMeat";
 import Grocery from "./pages/grocery";
+import ShoppingListPage from './pages/ShoppingList';
 import VegFruit from "./pages/VegFruit";
 import Home from './Public/home';
 import Login from './Public/login';
@@ -33,6 +34,7 @@ export default function App() {
               <Route path="/the-baby-store" element={<Home />} />
               <Route path="/the-beauty-store" element={<Home />} />
               <Route path="/veg-fruits" element={<VegFruit />} />
+              <Route path="/shoppinglist" element={<ShoppingListPage />} />
             </Routes>
           </main>
         </div>

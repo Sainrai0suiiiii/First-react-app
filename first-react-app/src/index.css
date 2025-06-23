@@ -1,39 +1,26 @@
-html, body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: #ffffff;
-}
-
-#root {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --primary-bg: #fff;
+  --secondary-bg: #f5f5f5;
+  --primary-color: #213547;
+  --accent-color: #388E3C;
+  --border-radius: 8px;
+  --font-main: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-size-base: 1rem;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: #fff;
 }
-a:hover {
-  color: #535bf2;
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 body {
@@ -42,15 +29,28 @@ body {
   min-width: 320px;
   min-height: 100vh;
   width: 100%;
+  font-family: var(--font-main);
+  font-size: var(--font-size-base);
+  color: var(--primary-color);
+  background: var(--primary-bg);
+}
+
+a {
+  font-weight: 500;
+  color: #265cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 2.5em;
   line-height: 1.1;
 }
 
 button {
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
@@ -61,7 +61,7 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #388E3C;
 }
 button:focus,
 button:focus-visible {
@@ -70,12 +70,130 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    --primary-bg: #fff;
+    --primary-color: #213547;
   }
   a:hover {
-    color: #747bff;
+    color: #388E3C;
   }
   button {
     background-color: #f9f9f9;
   }
+}
+
+body, #root {
+  background: #fff;
+}
+
+.fullwidth-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.fullwidth-header {
+  width: 100%;
+  background: #d32f2f;
+  color: #fff;
+  padding: 1rem 0.5rem;
+}
+
+.fullwidth-nav {
+  width: 100%;
+  background: #c1e5aa;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.5rem 0.5rem;
+}
+
+.fullwidth-nav button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #333;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.fullwidth-nav button:hover {
+  background: #388e3c;
+  color: #fff;
+}
+
+.fullwidth-content {
+  flex: 1;
+  width: 100%;
+  padding: 0; /* No side padding */
+  background: #fff;
+}
+
+.category-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0;
+  padding: 0 0.5rem;
+}
+
+.category-bar button {
+  background: #fff;
+  border: 1px solid #388e3c;
+  color: #388e3c;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.category-bar button:hover {
+  background: #388e3c;
+  color: #fff;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+  padding: 0 0.5rem;
+}
+
+.product-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(60,60,60,0.07);
+  padding: 1rem;
+  flex: 1 1 220px;
+  min-width: 180px;
+  max-width: 300px;
+  text-align: center;
+}
+
+.fullwidth-footer {
+  width: 100%;
+  background: #222;
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0.5rem;
+  margin-top: auto;
+}
+
+/* Responsive: stack nav and products on small screens */
+@media (max-width: 600px) {
+  .fullwidth-nav, .category-bar, .product-list {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .product-card {
+    max-width: 100%;
+  }
+}
+
+.login-background {
+  /* ... */
+  background: linear-gradient(135deg, #388e3c 0%, #1976d2 100%);
+  /* ... */
 }

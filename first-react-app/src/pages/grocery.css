@@ -2,6 +2,9 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .grocery-content {
@@ -9,6 +12,8 @@
   margin: 0 auto;
   padding: 25px;
   background-color: #ffffff;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .category-nav {

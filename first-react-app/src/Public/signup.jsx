@@ -27,9 +27,9 @@ const Signup = () => {
         <div className="signup-header">
           <h2>SIGN-UP</h2>
         </div>
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-          <div style={{ textAlign: 'left' }}>
-            <label htmlFor="name" style={{ fontWeight: 'bold', fontSize: '0.95rem' }}>Name</label>
+        <form className="signup-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="name">Name</label>
             <input
               type="text"
               id="name"
@@ -38,11 +38,10 @@ const Signup = () => {
               value={form.name}
               onChange={handleChange}
               required
-              style={{ width: '100%', marginTop: '0.3rem', padding: '0.6rem', borderRadius: '6px', border: '1px solid #ccc', fontSize: '1rem' }}
             />
           </div>
-          <div style={{ textAlign: 'left' }}>
-            <label htmlFor="mobile" style={{ fontWeight: 'bold', fontSize: '0.95rem' }}>Mobile Number</label>
+          <div className="form-group">
+            <label htmlFor="mobile">Mobile Number</label>
             <input
               type="tel"
               id="mobile"
@@ -51,11 +50,10 @@ const Signup = () => {
               value={form.mobile}
               onChange={handleChange}
               required
-              style={{ width: '100%', marginTop: '0.3rem', padding: '0.6rem', borderRadius: '6px', border: '1px solid #ccc', fontSize: '1rem' }}
             />
           </div>
-          <div style={{ textAlign: 'left' }}>
-            <label htmlFor="email" style={{ fontWeight: 'bold', fontSize: '0.95rem' }}>Email</label>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
@@ -64,11 +62,10 @@ const Signup = () => {
               value={form.email}
               onChange={handleChange}
               required
-              style={{ width: '100%', marginTop: '0.3rem', padding: '0.6rem', borderRadius: '6px', border: '1px solid #ccc', fontSize: '1rem' }}
             />
           </div>
-          <div style={{ textAlign: 'left' }}>
-            <label htmlFor="password" style={{ fontWeight: 'bold', fontSize: '0.95rem' }}>Password</label>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
@@ -77,16 +74,17 @@ const Signup = () => {
               value={form.password}
               onChange={handleChange}
               required
-              style={{ width: '100%', marginTop: '0.3rem', padding: '0.6rem', borderRadius: '6px', border: '1px solid #ccc', fontSize: '1rem' }}
             />
           </div>
-          <button type="submit" style={{ background: '#ff9800', color: '#fff', border: 'none', borderRadius: '6px', padding: '0.8rem', fontWeight: 'bold', fontSize: '1.1rem', marginTop: '0.5rem', cursor: 'pointer' }}>
+          <button type="submit" className="submit-button">
             Sign-up
           </button>
         </form>
-        <div style={{ marginTop: '1.2rem', fontSize: '0.95rem', color: '#888' }}>
-          If you already have an account?{' '}
-          <Link to="/login" style={{ color: '#ff9800', textDecoration: 'none', fontWeight: 'bold' }}>Login Now</Link>
+        <div className="signup-footer">
+          <span className="signin">
+            If you already have an account?{' '}
+            <Link to="/login">Login Now</Link>
+          </span>
         </div>
       </div>
     </div>

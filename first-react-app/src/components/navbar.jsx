@@ -23,17 +23,17 @@ export default function Navbar() {
           <input type="text" placeholder="Search for products or categories" className="navbar-search-input" />
           <button className="navbar-search-btn">🔍</button>
         </div>
+        <Link to="/login" className="navbar-login prominent">Login</Link>
         <div className="navbar-contact">
           <span className="contact-order-at">ORDER AT</span>
           <span className="contact-phone-icon">📱</span>
-          <span className="contact-phone-number">01-4511000</span>
+          <span className="contact-phone-number">01-451-1000</span>
         </div>
         <div className="navbar-actions">
-          <Link to="/cart" className="navbar-cart">
+          <Link to="/shoppinglist" className="navbar-cart" aria-label="Go to Shopping List">
             <span className="cart-icon">🛒</span>
-            <span className="cart-count">10</span>
+            <span className="cart-count">0</span>
           </Link>
-          <Link to="/login" className="navbar-login">Login</Link>
         </div>
       </div>
       <div className="navbar-bottom">

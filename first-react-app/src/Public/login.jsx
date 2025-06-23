@@ -21,16 +21,6 @@ const Login = () => {
   return (
     <div className="login-background">
       <div className="login-card">
-        <div className="login-icon">
-          {/* Shopping cart SVG */}
-          <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 20H45L40 40H20L15 20Z" stroke="#fff" strokeWidth="2.5" fill="none"/>
-            <circle cx="25" cy="45" r="2.5" fill="#fff"/>
-            <circle cx="35" cy="45" r="2.5" fill="#fff"/>
-            <path d="M30 15V25" stroke="#fff" strokeWidth="2.5" strokeLinecap="round"/>
-            <path d="M27 18L30 15L33 18" stroke="#fff" strokeWidth="2.5" strokeLinecap="round"/>
-          </svg>
-        </div>
         <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
           <div className="input-group">
             <span className="input-icon">

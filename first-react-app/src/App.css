@@ -1,3 +1,12 @@
+:root {
+  --primary-bg: #fff;
+  --secondary-bg: #f5f5f5;
+  --main-radius: 12px;
+  --main-shadow: 0 2px 8px rgba(60, 60, 60, 0.07);
+  --main-padding: 24px;
+  --main-margin: 24px;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -38,23 +47,23 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: var(--primary-bg);
 }
 
 .content-area {
   display: flex;
   flex: 1 0 auto;
-  background: #f5f5f5;
+  background: var(--secondary-bg);
   min-height: 0;
 }
 
 .main-content {
   flex: 1;
-  background: #fff;
-  margin: 24px 0 0 24px;
-  padding: 24px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(60, 60, 60, 0.07);
+  background: var(--primary-bg);
+  margin: var(--main-margin) 0 0 var(--main-margin);
+  padding: var(--main-padding);
+  border-radius: var(--main-radius);
+  box-shadow: var(--main-shadow);
   min-width: 0;
 }
 
