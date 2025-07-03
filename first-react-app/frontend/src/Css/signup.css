@@ -1,0 +1,164 @@
+/* Add this at the top of your signup.css */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #9e3636 0%, #576eee 100%);
+}
+
+/* Background for the signup page */
+.signup-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #388e3c 0%, #1976d2 100%);
+  z-index: 0;
+}
+
+.signup-container {
+  background: #fff;
+  position: relative;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  padding: 3rem;
+  max-width: 480px;
+  width: 100%;
+  margin: 2rem;
+}
+
+.signup-form, .signup-header, .signup-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.signup-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.signup-icon {
+  margin-bottom: 1rem;
+}
+
+.signup-header h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+
+.signup-header p {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9375rem;
+  color: #010102;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+}
+
+input {
+  width: 100%;
+  padding: 0.875rem 1rem 0.875rem 2.5rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-size: 1rem;
+  background: transparent;
+  color: #0c0909;
+  transition: all 0.2s ease;
+}
+
+input:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.submit-button {
+  width: 100%;
+  background: linear-gradient(90deg, #17a2a5 0%, #138b8d 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.875rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 1rem;
+}
+
+.submit-button:hover {
+  background: linear-gradient(90deg, #138b8d 0%, #0f6b6d 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(23, 162, 165, 0.2);
+}
+
+.signup-footer {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.terms {
+  color: #64748b;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.terms a {
+  color: #17a2a5;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signin {
+  color: #334155;
+  font-size: 0.9375rem;
+}
+
+.signin a {
+  color: #17a2a5;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .signup-container {
+    padding: 2rem;
+    margin: 1rem;
+  }
+  
+  .signup-header h2 {
+    font-size: 1.5rem;
+  }
+} 
