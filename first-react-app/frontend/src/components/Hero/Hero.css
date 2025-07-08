@@ -1,0 +1,228 @@
+.hero {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #f3f4f6;
+  }
+  
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    filter: blur(2px) brightness(0.8);
+  }
+  
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(30, 58, 138, 0.85), rgba(59, 130, 246, 0.7));
+    z-index: 1;
+    backdrop-filter: blur(2px);
+  }
+  
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+  
+  .hero-text {
+    color: #fff;
+    max-width: 600px;
+  }
+  
+  .hero-title {
+    font-size: 3.2rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.18);
+  }
+  
+  .hero-highlight {
+    display: inline-block;
+    background: linear-gradient(90deg, #fbbf24, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin: 0.5rem 0;
+    letter-spacing: 1px;
+  }
+  
+  .hero-description {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    line-height: 1.7;
+    opacity: 0.95;
+  }
+  
+  .hero-buttons {
+    display: flex;
+    gap: 1.2rem;
+    margin-top: 1rem;
+  }
+  
+  .btn {
+    padding: 0.85rem 2.2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(59,130,246,0.08);
+  }
+  
+  .btn-primary {
+    background: linear-gradient(90deg, #ef4444, #f59e0b);
+    color: #fff;
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background: linear-gradient(90deg, #f59e0b, #ef4444);
+    color: #fff;
+  }
+  
+  .btn-outline {
+    background: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+  }
+  
+  .btn-outline:hover {
+    background: #fff;
+    color: #1e3a8a;
+  }
+  
+  .hero-features {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    max-width: 700px;
+  }
+  
+  @media (min-width: 900px) {
+    .hero-content {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 4rem;
+    }
+    .hero-text {
+      flex: 1;
+    }
+    .hero-features {
+      flex: 1;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+  }
+  
+  .feature-card {
+    background: rgba(255,255,255,0.18);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255,255,255,0.22);
+    padding: 2rem 2.5rem;
+    text-align: center;
+    color: #fff;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  
+  .feature-card:hover {
+    box-shadow: 0 12px 40px 0 rgba(31,38,135,0.18);
+    transform: translateY(-4px) scale(1.03);
+  }
+  
+  .feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1rem;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    border-radius: 50%;
+    color: #fff;
+    font-size: 2.5rem;
+    box-shadow: 0 2px 8px rgba(251,191,36,0.12);
+  }
+  
+  .feature-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.7rem;
+    font-weight: 700;
+  }
+  
+  .feature-card p {
+    opacity: 0.93;
+    line-height: 1.6;
+    font-size: 1.05rem;
+  }
+  
+  /* Mobile Styles */
+  @media (max-width: 900px) {
+    .hero-content {
+      flex-direction: column;
+      gap: 2.5rem;
+      padding: 2rem 1rem;
+    }
+    .hero-title {
+      font-size: 2.2rem;
+    }
+    .hero-highlight {
+      font-size: 2.5rem;
+    }
+    .hero-description {
+      font-size: 1.1rem;
+    }
+    .feature-card {
+      padding: 1.2rem 1rem;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .hero-content {
+      padding: 1.2rem 0.5rem;
+    }
+    .hero-title {
+      font-size: 1.5rem;
+    }
+    .hero-highlight {
+      font-size: 1.3rem;
+    }
+    .feature-card {
+      padding: 1rem 0.5rem;
+    }
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      font-size: 1.5rem;
+    }
+  }
