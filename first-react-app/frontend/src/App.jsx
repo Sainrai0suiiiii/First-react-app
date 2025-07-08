@@ -1,47 +1,51 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import './App.css';
-import Footer from './components/footer';
-import Navbar from './components/navbar';
-import Beverage from "./pages/beverage";
-import Dairy from "./pages/dairy";
-import EggsMeat from "./pages/EggsMeat";
-import Grocery from "./pages/grocery";
-import ProfilePage from "./pages/profile";
-import ShoppingListPage from './pages/ShoppingListPage';
-import VegFruit from "./pages/VegFruit";
-import Home from './Public/home';
-import Login from './Public/login';
-import Signup from './Public/signup';
+import React from 'react';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import Footer from './components/Footer/Footer';
+import Header from './components/Header/Header';
+import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
+import { ProductProvider } from './context/ProductContext';
+import './index.css';
+import About from './pages/About/About';
+import Cart from './pages/Cart/Cart';
+import Contact from './pages/Contact/Contact';
+import Home from './pages/Home/Home';
+import Login from './pages/Login/Login';
+import Orders from './pages/Orders/Orders';
+import ProductDetail from './pages/ProductDetails/ProductsDetails';
+import Products from './pages/Products/Products';
+import Profile from './pages/Profile/Profile';
+import Register from './pages/Register/Register';
 
-export default function App() {
+function App() {
   return (
-    <BrowserRouter>
-      <div className="app-container">
-        <Navbar />
-        <div className="content-area">
-          <main className="main-content">
+    <AuthProvider>
+      <CartProvider>
+        <ProductProvider>
+          <Router>
+            <div className="App">
+              <Header />
+              <main>
             <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/products" element={<Products />} />
+                  <Route path="/product/:id" element={<ProductDetail />} />
+                  <Route path="/cart" element={<Cart />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/" element={<Home />} />
-              <Route path="/grocery" element={<Grocery />} />
-              <Route path="/dairy" element={<Dairy />} />
-              <Route path="/beverage" element={<Beverage />} />
-              <Route path="/eggs-meat" element={<EggsMeat />} />
-              <Route path="/household-items" element={<Home />} />
-              <Route path="/kitchen-pet-food" element={<Home />} />
-              <Route path="/packaged-food" element={<Home />} />
-              <Route path="/the-baby-store" element={<Home />} />
-              <Route path="/the-beauty-store" element={<Home />} />
-              <Route path="/veg-fruits" element={<VegFruit />} />
-              <Route path="/shoppinglist" element={<ShoppingListPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/orders" element={<Orders />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/contact" element={<Contact />} />
             </Routes>
           </main>
-        </div>
         <Footer />
       </div>
-    </BrowserRouter>
+          </Router>
+        </ProductProvider>
+      </CartProvider>
+    </AuthProvider>
   );
 }
+
+export default App;
