@@ -1,0 +1,241 @@
+.product-grid-container {
+    padding: 2rem 0;
+  }
+  
+  .product-grid-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    gap: 1rem;
+  }
+  
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f4f6;
+    border-top: 4px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .product-grid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e5e7eb;
+  }
+  
+  .results-info h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+  }
+  
+  .results-info p {
+    color: #6b7280;
+    font-size: 1rem;
+  }
+  
+  .grid-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .filter-toggle {
+    background: #f3f4f6;
+    border: 2px solid #e5e7eb;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .filter-toggle:hover {
+    background: #e5e7eb;
+    border-color: #d1d5db;
+  }
+  
+  .sort-select {
+    padding: 0.75rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: white;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+  
+  .sort-select:focus {
+    outline: none;
+    border-color: #3b82f6;
+  }
+  
+  .view-controls {
+    display: flex;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .view-btn {
+    background: white;
+    border: none;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .view-btn:hover {
+    background: #f3f4f6;
+  }
+  
+  .view-btn.active {
+    background: #3b82f6;
+    color: white;
+  }
+  
+  .filters-panel {
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .filter-section h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #1f2937;
+  }
+  
+  .category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .category-btn {
+    background: #f3f4f6;
+    border: 2px solid #e5e7eb;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .category-btn:hover {
+    background: #e5e7eb;
+    border-color: #d1d5db;
+  }
+  
+  .category-btn.active {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+  }
+  
+  .product-grid {
+    display: grid;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .product-grid.grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+  
+  .product-grid.list {
+    grid-template-columns: 1fr;
+  }
+  
+  .no-products {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #6b7280;
+  }
+  
+  .no-products h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #374151;
+  }
+  
+  /* Mobile Styles */
+  @media (max-width: 768px) {
+    .product-grid-header {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: stretch;
+    }
+  
+    .results-info {
+      text-align: center;
+    }
+  
+    .results-info h2 {
+      font-size: 1.5rem;
+    }
+  
+    .grid-controls {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  
+    .sort-select {
+      flex: 1;
+      min-width: 150px;
+    }
+  
+    .product-grid.grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+  
+    .filters-panel {
+      padding: 1rem;
+    }
+  
+    .category-filters {
+      justify-content: center;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .product-grid.grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .grid-controls {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  
+    .view-controls {
+      width: 100%;
+    }
+  
+    .view-btn {
+      flex: 1;
+    }
+  }
