@@ -4,7 +4,7 @@ import { generateToken } from "../../security/jwt-util.js";
 
 const register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password,role } = req.body;
     
     // Validation
     if (!name || !email || !password) {
@@ -35,12 +35,12 @@ const register = async (req, res) => {
     });
     
     // Generate token
-    const token = generateToken({ user: user.toJSON() });
+    const token = generateToken({ id: user.id, name: user.name, email: user.email, role: user.role });
     
     res.status(201).json({
       success: true,
       data: { 
-        user: { id: user.id, name: user.name, email: user.email },
+        user: { id: user.id, name: user.name, email: user.email,role:user.role },
         access_token: token 
       },
       message: "User registered successfully"
@@ -85,7 +85,7 @@ const login = async (req, res) => {
     }
     
     // Generate token
-    const token = generateToken({ user: user.toJSON() });
+    const token = generateToken({ id: user.id, name: user.name, email: user.email, role: user.role });
     
     res.status(200).json({
       success: true,

@@ -6,6 +6,9 @@ import { Cart, Product } from '../../models/index.js';
 const getUserCart = async (req, res) => {
     try {
         const userId = req.user.id; // From JWT token
+        if (!userId) {
+            return res.status(400).json({ success: false, error: "User ID not found in request" });
+        }
         
         const cartItems = await Cart.findAll({
             where: { userId },
@@ -49,6 +52,9 @@ const getUserCart = async (req, res) => {
 const addToCart = async (req, res) => {
     try {
         const userId = req.user.id;
+        if (!userId) {
+            return res.status(400).json({ success: false, error: "User ID not found in request" });
+        }
         const { productId, quantity = 1 } = req.body;
         
         // Validation
@@ -129,6 +135,9 @@ const addToCart = async (req, res) => {
 const updateCartItem = async (req, res) => {
     try {
         const userId = req.user.id;
+        if (!userId) {
+            return res.status(400).json({ success: false, error: "User ID not found in request" });
+        }
         const { id } = req.params;
         const { quantity } = req.body;
         
@@ -183,6 +192,9 @@ const updateCartItem = async (req, res) => {
 const removeFromCart = async (req, res) => {
     try {
         const userId = req.user.id;
+        if (!userId) {
+            return res.status(400).json({ success: false, error: "User ID not found in request" });
+        }
         const { id } = req.params;
         
         const cartItem = await Cart.findOne({
@@ -217,6 +229,9 @@ const removeFromCart = async (req, res) => {
 const clearCart = async (req, res) => {
     try {
         const userId = req.user.id;
+        if (!userId) {
+            return res.status(400).json({ success: false, error: "User ID not found in request" });
+        }
         
         await Cart.destroy({
             where: { userId }
