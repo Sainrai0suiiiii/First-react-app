@@ -25,6 +25,15 @@ const Header = () => {
     navigate('/');
   };
 
+  const categories = [
+    'Fruits',
+    'Dairy',
+    'Beverages',
+    'Vegetables',
+    'Meat',
+    'Grocery',
+  ];
+
   return (
     <header className="header">
       <div className="container">
@@ -36,6 +45,22 @@ const Header = () => {
 
           <nav className={`nav ${isMenuOpen ? 'nav-open' : ''}`}>
             <Link to="/" className="nav-link">Home</Link>
+            <div className="nav-dropdown">
+              <button className="nav-link nav-dropdown-btn" tabIndex={0}>
+                Categories
+              </button>
+              <div className="nav-dropdown-content">
+                {categories.map(cat => (
+                  <Link
+                    key={cat}
+                    to={`/products?category=${encodeURIComponent(cat)}`}
+                    className="dropdown-link"
+                  >
+                    {cat}
+                  </Link>
+                ))}
+              </div>
+            </div>
             <Link to="/products" className="nav-link">Products</Link>
             <Link to="/about" className="nav-link">About</Link>
             <Link to="/contact" className="nav-link">Contact</Link>

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext();
 
@@ -19,13 +19,15 @@ export const AuthProvider = ({ children }) => {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    // Mock user data
+    // Mock user data with role
+    const isAdmin = email === 'admin@valleyfresh.com';
     const userData = {
       id: 1,
       email,
-      name: 'John Doe',
+      name: isAdmin ? 'Admin User' : 'John Doe',
       phone: '+977-9841234567',
-      address: 'Kathmandu, Nepal'
+      address: 'Kathmandu, Nepal',
+      role: isAdmin ? 'admin' : 'user'
     };
     
     setUser(userData);

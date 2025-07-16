@@ -1,5 +1,5 @@
-import { Sequelize } from 'sequelize'
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
+import { Sequelize } from 'sequelize';
 
 dotenv.config();
 
@@ -10,6 +10,7 @@ export const sequelize = new Sequelize(
   {
     host: process.env.DB_HOST,
     dialect: 'postgres',// other example mysql,oracle,h2
+    logging: false, // Disable SQL query logging
   }
 );
 

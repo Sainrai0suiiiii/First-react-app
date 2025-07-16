@@ -1,0 +1,136 @@
+.dashboard-container {
+  padding: 2.5rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.dashboard-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(30,41,59,0.06);
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 1.2rem;
+  gap: 1.2rem;
+  transition: box-shadow 0.2s;
+}
+.dashboard-card:hover {
+  box-shadow: 0 4px 24px rgba(30,41,59,0.10);
+}
+.card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+.card-info {
+  display: flex;
+  flex-direction: column;
+}
+.card-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+.card-label {
+  font-size: 1rem;
+  color: #64748b;
+}
+
+.dashboard-section {
+  margin-top: 2.5rem;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(30,41,59,0.06);
+  padding: 2rem 1.5rem;
+}
+.dashboard-section h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  color: #1e293b;
+}
+.dashboard-table-wrapper {
+  overflow-x: auto;
+}
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+.dashboard-table th, .dashboard-table td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+}
+.dashboard-table th {
+  background: #f8fafc;
+  color: #64748b;
+  font-weight: 600;
+  border-bottom: 2px solid #e2e8f0;
+}
+.dashboard-table tr {
+  border-bottom: 1px solid #f1f5f9;
+}
+.dashboard-table tr:last-child {
+  border-bottom: none;
+}
+.dashboard-table td {
+  color: #334155;
+  font-size: 1rem;
+}
+.status-badge {
+  display: inline-block;
+  padding: 0.3em 0.9em;
+  border-radius: 999px;
+  font-size: 0.95em;
+  font-weight: 500;
+  background: #f1f5f9;
+  color: #64748b;
+}
+.status-delivered {
+  background: #dcfce7;
+  color: #22c55e;
+}
+.status-pending {
+  background: #fef9c3;
+  color: #eab308;
+}
+.status-shipped {
+  background: #e0e7ff;
+  color: #6366f1;
+}
+
+@media (max-width: 900px) {
+  .dashboard-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-container {
+    padding: 1.2rem 0.5rem;
+  }
+  .dashboard-section {
+    padding: 1.2rem 0.5rem;
+  }
+}

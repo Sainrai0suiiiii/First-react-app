@@ -1,4 +1,4 @@
-import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
+import { Eye, EyeOff, Lock, Mail, ShoppingBag } from 'lucide-react';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -10,8 +10,8 @@ const Login = () => {
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -21,16 +21,20 @@ const Login = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
+    setError('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
-
     try {
-      await login(formData.email, formData.password);
-      navigate('/');
+      const user = await login(formData.email, formData.password);
+      if (user.role === 'admin') {
+        navigate('/admin/Dashboard');
+      } else {
+        navigate('/');
+      }
     } catch (err) {
       setError('Invalid email or password');
     } finally {
@@ -40,89 +44,74 @@ const Login = () => {
 
   return (
     <div className="login-page">
-      <div className="container">
-        <div className="login-container">
-          <div className="login-header">
-            <div className="logo">
-              <span className="logo-icon">🏔️</span>
-              <span className="logo-text">Valley Fresh</span>
-            </div>
-            <h1>Welcome Back</h1>
-            <p>Sign in to your account to continue shopping</p>
+      <div className="login-container">
+        <div className="login-header">
+          <div className="login-logo">
+            <ShoppingBag className="login-logo-icon" />
+            <h1>FreshMart</h1>
           </div>
+          <h2>Welcome Back</h2>
+          <p>Sign in to your account to continue shopping</p>
+        </div>
 
-          <form onSubmit={handleSubmit} className="login-form">
-            {error && <div className="error-message">{error}</div>}
-            
-            <div className="form-group">
-              <label className="form-label">
-                <Mail size={20} />
-                Email Address
-              </label>
+        <form className="login-form" onSubmit={handleSubmit}>
+          {error && <div className="error-message">{error}</div>}
+          
+          <div className="form-group">
+            <label htmlFor="email">Email Address</label>
+            <div className="input-wrapper">
+              <Mail className="input-icon" />
               <input
                 type="email"
+                id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="form-input"
                 placeholder="Enter your email"
                 required
               />
             </div>
-
-            <div className="form-group">
-              <label className="form-label">
-                <Lock size={20} />
-                Password
-              </label>
-              <div className="password-input-container">
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="form-input"
-                  placeholder="Enter your password"
-                  required
-                />
-                <button
-                  type="button"
-                  className="password-toggle"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
-              </div>
-            </div>
-
-            <div className="form-options">
-              <label className="checkbox-label">
-                <input type="checkbox" />
-                <span>Remember me</span>
-              </label>
-              <Link to="/forgot-password" className="forgot-link">
-                Forgot password?
-              </Link>
-            </div>
-
-            <button type="submit" className="login-btn" disabled={loading}>
-              {loading ? 'Signing In...' : 'Sign In'}
-            </button>
-          </form>
-
-          <div className="login-footer">
-            <p>
-              Don't have an account?{' '}
-              <Link to="/register" className="register-link">
-                Create Account
-              </Link>
-            </p>
           </div>
 
-          <div className="demo-credentials">
-            <h3>Demo Credentials</h3>
-            <p><strong>Email:</strong> demo@valleyfresh.com</p>
-            <p><strong>Password:</strong> demo123</p>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <div className="input-wrapper">
+              <Lock className="input-icon" />
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Enter your password"
+                required
+              />
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <EyeOff /> : <Eye />}
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" className="login-btn" disabled={loading}>
+            {loading ? 'Signing In...' : 'Sign In'}
+          </button>
+        </form>
+
+        <div className="login-footer">
+          <p>Don't have an account? <Link to="/register">Sign up here</Link></p>
+        </div>
+
+        <div className="demo-credentials">
+          <h3>Demo Credentials:</h3>
+          <div className="demo-user">
+            <strong>Customer:</strong> customer@grocery.com / customer123
+          </div>
+          <div className="demo-user">
+            <strong>Admin:</strong> admin@grocery.com / admin123
           </div>
         </div>
       </div>

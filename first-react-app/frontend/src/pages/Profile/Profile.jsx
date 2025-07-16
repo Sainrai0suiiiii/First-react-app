@@ -12,6 +12,8 @@ const Profile = () => {
     phone: user?.phone || '',
     address: user?.address || ''
   });
+  const [saving, setSaving] = useState(false); // Added state for saving
+  const [saveMsg, setSaveMsg] = useState(''); // Added state for save message
 
   const handleChange = (e) => {
     setFormData({
@@ -191,9 +193,7 @@ const Profile = () => {
                 <h3>Quick Actions</h3>
                 <div className="action-buttons">
                   <button className="action-btn">View Orders</button>
-                  <button className="action-btn">Wishlist</button>
                   <button className="action-btn">Change Password</button>
-                  <button className="action-btn">Notifications</button>
                 </div>
               </div>
             </div>
