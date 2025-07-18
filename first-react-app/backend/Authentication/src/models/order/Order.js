@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../../database/index.js";
-import { User } from "../user/User.js";
 
 export const Order = sequelize.define("Order", {
     id: {
@@ -11,10 +10,6 @@ export const Order = sequelize.define("Order", {
     userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-            model: User,
-            key: 'id'
-        }
     },
     totalAmount: {
         type: DataTypes.DECIMAL(10, 2),
@@ -36,7 +31,4 @@ export const Order = sequelize.define("Order", {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
     }
-});
-
-// Define associations
-Order.belongsTo(User, { foreignKey: 'userId' }); 
+}); 

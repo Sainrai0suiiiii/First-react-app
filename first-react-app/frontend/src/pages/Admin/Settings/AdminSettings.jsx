@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import './AdminSettings.css';
 
 const initialSettings = {
@@ -11,6 +12,14 @@ const initialSettings = {
 const AdminSettings = () => {
   const [settings, setSettings] = useState(initialSettings);
 
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/settings", {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    })
+    .then(res => setSettings(res.data.settings || res.data))
+    .catch(err => {/* handle error */});
+  }, []);
+
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
     setSettings((prev) => ({
@@ -21,8 +30,11 @@ const AdminSettings = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would send settings to the backend
-    alert('Settings saved!');
+    axios.put("http://localhost:5000/api/settings", settings, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    })
+    .then(() => alert("Settings saved!"))
+    .catch(() => alert("Failed to save settings."));
   };
 
   return (

@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import './DashBoard.css';
 
 const summary = [
@@ -16,6 +17,23 @@ const recentOrders = [
 ];
 
 const DashBoard = () => {
+  const [summary, setSummary] = useState([]);
+  const [recentOrders, setRecentOrders] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/admin/summary", {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    })
+    .then(res => setSummary(res.data.summary || res.data))
+    .catch(err => setSummary([]));
+
+    axios.get("http://localhost:5000/api/orders", {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    })
+    .then(res => setRecentOrders(res.data.orders || res.data))
+    .catch(err => setRecentOrders([]));
+  }, []);
+
   return (
     <div className="dashboard-container">
       <h1 className="dashboard-title">Admin Dashboard</h1>

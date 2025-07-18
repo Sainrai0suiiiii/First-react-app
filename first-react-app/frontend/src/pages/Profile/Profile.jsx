@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Edit, Mail, MapPin, Phone, Save, User, X } from 'lucide-react';
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
@@ -22,11 +23,18 @@ const Profile = () => {
     });
   };
 
-  const handleSave = () => {
-    // In a real app, this would make an API call to update user data
-    console.log('Saving profile:', formData);
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      await axios.put("http://localhost:5000/api/users/profile", formData, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+      });
+      setSaveMsg("Profile updated successfully!");
+    } catch (err) {
+      setSaveMsg("Failed to update profile.");
+    }
+    setSaving(false);
     setIsEditing(false);
-    alert('Profile updated successfully!');
   };
 
   const handleCancel = () => {

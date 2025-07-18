@@ -1,14 +1,18 @@
-import React from 'react';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import './AdminUsers.css';
 
-const users = [
-  { id: 1, name: 'Alice', email: 'alice@example.com', role: 'admin', status: 'Active', joined: '2024-01-10' },
-  { id: 2, name: 'Bob', email: 'bob@example.com', role: 'user', status: 'Active', joined: '2024-02-15' },
-  { id: 3, name: 'Charlie', email: 'charlie@example.com', role: 'user', status: 'Suspended', joined: '2024-03-20' },
-  { id: 4, name: 'Diana', email: 'diana@example.com', role: 'user', status: 'Active', joined: '2024-04-05' },
-];
-
 const AdminUsers = () => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/users", {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    })
+    .then(res => setUsers(res.data.users || res.data))
+    .catch(err => setUsers([]));
+  }, []);
+
   return (
     <div className="admin-users-container">
       <h1 className="users-title">Users</h1>

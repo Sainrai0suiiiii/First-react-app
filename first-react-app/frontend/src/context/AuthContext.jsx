@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext();
@@ -16,42 +17,35 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Mock user data with role
-    const isAdmin = email === 'admin@valleyfresh.com';
-    const userData = {
-      id: 1,
-      email,
-      name: isAdmin ? 'Admin User' : 'John Doe',
-      phone: '+977-9841234567',
-      address: 'Kathmandu, Nepal',
-      role: isAdmin ? 'admin' : 'user'
-    };
-    
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
-    return userData;
+    try {
+      const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const { user: userData, token } = res.data;
+      setUser(userData);
+      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('token', token);
+      return userData;
+    } catch (err) {
+      throw new Error(err.response?.data?.message || 'Login failed');
+    }
   };
 
   const register = async (userData) => {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    const newUser = {
-      id: Date.now(),
-      ...userData
-    };
-    
-    setUser(newUser);
-    localStorage.setItem('user', JSON.stringify(newUser));
-    return newUser;
+    try {
+      const res = await axios.post('http://localhost:5000/api/auth/register', userData);
+      const { user: newUser, token } = res.data;
+      setUser(newUser);
+      localStorage.setItem('user', JSON.stringify(newUser));
+      localStorage.setItem('token', token);
+      return newUser;
+    } catch (err) {
+      throw new Error(err.response?.data?.message || 'Registration failed');
+    }
   };
 
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
   };
 
   return (

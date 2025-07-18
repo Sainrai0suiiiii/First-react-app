@@ -1,7 +1,5 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../../database/index.js";
-import { Product } from "../product/Product.js";
-import { Order } from "./Order.js";
 
 export const OrderItem = sequelize.define("OrderItem", {
     id: {
@@ -13,7 +11,7 @@ export const OrderItem = sequelize.define("OrderItem", {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Order,
+            model: 'Orders', // Use the table name as a string (case-sensitive, usually pluralized)
             key: 'id'
         }
     },
@@ -21,7 +19,7 @@ export const OrderItem = sequelize.define("OrderItem", {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Product,
+            model: 'Products', // Use the table name as a string (case-sensitive, usually pluralized)
             key: 'id'
         }
     },
@@ -33,8 +31,4 @@ export const OrderItem = sequelize.define("OrderItem", {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
     }
-});
-
-// Define associations
-OrderItem.belongsTo(Order, { foreignKey: 'orderId' });
-OrderItem.belongsTo(Product, { foreignKey: 'productId' }); 
+}); 

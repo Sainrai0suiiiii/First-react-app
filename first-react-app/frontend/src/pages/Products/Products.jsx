@@ -1,50 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import ProductGrid from '../../components/ProductGrid/ProductGrid';
-import { useProducts } from '../../context/ProductContext';
-import './Products.css';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const Products = () => {
-  const [searchParams] = useSearchParams();
-  const { categories } = useProducts();
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const category = searchParams.get('category') || 'All';
-    const search = searchParams.get('search') || '';
-    setSelectedCategory(category);
-    setSearchQuery(search);
-  }, [searchParams]);
+    axios.get("http://localhost:5000/api/products")
+      .then(response => {
+        setProducts(response.data.products || response.data); // adjust if your API returns differently
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error("Error fetching products:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="products-page">
-      <div className="container">
-        <div className="products-header">
-          <h1 className="page-title">Our Products</h1>
-          <p className="page-description">
-            Discover fresh, quality products delivered right to your doorstep
-          </p>
-        </div>
-
-        <div className="category-tabs">
-          {categories.map(category => (
-            <button
-              key={category}
-              className={`category-tab ${selectedCategory === category ? 'active' : ''}`}
-              onClick={() => setSelectedCategory(category)}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-
-        <ProductGrid 
-          searchQuery={searchQuery} 
-          selectedCategory={selectedCategory}
-        />
-      </div>
-    </div>
+    <ul>
+      {products.map(product => (
+        <li key={product.id}>{product.name}</li>
+      ))}
+    </ul>
   );
 };
 

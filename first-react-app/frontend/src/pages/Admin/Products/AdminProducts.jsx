@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import axios from "axios";
+import React, { useEffect, useState } from 'react';
 import './AdminProducts.css';
 
 const categories = [
@@ -24,6 +25,14 @@ const AdminProducts = () => {
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState(emptyForm);
   const [categoryFilter, setCategoryFilter] = useState('All');
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/products", {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    })
+    .then(res => setProducts(res.data.products || res.data))
+    .catch(err => setProducts([]));
+  }, []);
 
   // Add product
   const handleAdd = (e) => {

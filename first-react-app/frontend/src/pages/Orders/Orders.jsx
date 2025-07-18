@@ -1,49 +1,59 @@
-import React, { useState } from 'react';
-import { Package, Clock, CheckCircle, XCircle, Eye } from 'lucide-react';
+import axios from 'axios';
+import { CheckCircle, Clock, Eye, Package, XCircle } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 import './Orders.css';
 
 const Orders = () => {
   const [selectedStatus, setSelectedStatus] = useState('All');
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/orders", {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    })
+    .then(res => setOrders(res.data.orders || res.data))
+    .catch(err => setOrders([]));
+  }, []);
 
   // Mock order data
-  const orders = [
-    {
-      id: '#ORD-001',
-      date: '2024-01-15',
-      status: 'Delivered',
-      total: 1250,
-      items: 8,
-      deliveryTime: '25 mins',
-      products: ['Organic Apples', 'Fresh Milk', 'Basmati Rice']
-    },
-    {
-      id: '#ORD-002',
-      date: '2024-01-12',
-      status: 'Processing',
-      total: 850,
-      items: 5,
-      deliveryTime: '30 mins',
-      products: ['Chicken Breast', 'Mixed Vegetables', 'Whole Wheat Bread']
-    },
-    {
-      id: '#ORD-003',
-      date: '2024-01-10',
-      status: 'Delivered',
-      total: 1650,
-      items: 12,
-      deliveryTime: '28 mins',
-      products: ['Fresh Fruits Bundle', 'Dairy Products', 'Meat Package']
-    },
-    {
-      id: '#ORD-004',
-      date: '2024-01-08',
-      status: 'Cancelled',
-      total: 420,
-      items: 3,
-      deliveryTime: '-',
-      products: ['Organic Vegetables', 'Fresh Herbs']
-    }
-  ];
+  // const orders = [
+  //   {
+  //     id: '#ORD-001',
+  //     date: '2024-01-15',
+  //     status: 'Delivered',
+  //     total: 1250,
+  //     items: 8,
+  //     deliveryTime: '25 mins',
+  //     products: ['Organic Apples', 'Fresh Milk', 'Basmati Rice']
+  //   },
+  //   {
+  //     id: '#ORD-002',
+  //     date: '2024-01-12',
+  //     status: 'Processing',
+  //     total: 850,
+  //     items: 5,
+  //     deliveryTime: '30 mins',
+  //     products: ['Chicken Breast', 'Mixed Vegetables', 'Whole Wheat Bread']
+  //   },
+  //   {
+  //     id: '#ORD-003',
+  //     date: '2024-01-10',
+  //     status: 'Delivered',
+  //     total: 1650,
+  //     items: 12,
+  //     deliveryTime: '28 mins',
+  //     products: ['Fresh Fruits Bundle', 'Dairy Products', 'Meat Package']
+  //   },
+  //   {
+  //     id: '#ORD-004',
+  //     date: '2024-01-08',
+  //     status: 'Cancelled',
+  //     total: 420,
+  //     items: 3,
+  //     deliveryTime: '-',
+  //     products: ['Organic Vegetables', 'Fresh Herbs']
+  //   }
+  // ];
 
   const statusFilters = ['All', 'Processing', 'Delivered', 'Cancelled'];
 

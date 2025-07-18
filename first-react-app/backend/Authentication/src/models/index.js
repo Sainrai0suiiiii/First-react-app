@@ -1,6 +1,14 @@
-export { Cart } from './cart/Cart.js';
-export { Order } from './order/Order.js';
-export { OrderItem } from './order/OrderItem.js';
-export { Product } from './product/Product.js';
-export { User } from './user/User.js';
+import { Cart } from './cart/Cart.js';
+import { Order } from './order/Order.js';
+import { OrderItem } from './order/OrderItem.js';
+import { Product } from './product/Product.js';
+import { User } from './user/User.js';
+
+// Associations
+Order.belongsTo(User, { foreignKey: 'userId' });
+Order.hasMany(OrderItem, { foreignKey: 'orderId' });
+OrderItem.belongsTo(Order, { foreignKey: 'orderId' });
+OrderItem.belongsTo(Product, { foreignKey: 'productId' });
+
+export { Cart, Order, OrderItem, Product, User };
 

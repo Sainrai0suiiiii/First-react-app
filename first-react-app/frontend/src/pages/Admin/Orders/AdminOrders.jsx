@@ -1,14 +1,18 @@
-import React from 'react';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import './AdminOrders.css';
 
-const orders = [
-  { id: 1001, customer: 'Alice', total: '$120', status: 'Delivered', date: '2024-06-01' },
-  { id: 1002, customer: 'Bob', total: '$80', status: 'Pending', date: '2024-06-02' },
-  { id: 1003, customer: 'Charlie', total: '$45', status: 'Shipped', date: '2024-06-03' },
-  { id: 1004, customer: 'Diana', total: '$210', status: 'Cancelled', date: '2024-06-04' },
-];
-
 const AdminOrders = () => {
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/orders", {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    })
+    .then(res => setOrders(res.data.orders || res.data))
+    .catch(err => setOrders([]));
+  }, []);
+
   return (
     <div className="admin-orders-container">
       <h1 className="orders-title">Orders</h1>
