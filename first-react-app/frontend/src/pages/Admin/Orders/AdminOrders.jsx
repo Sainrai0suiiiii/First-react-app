@@ -2,16 +2,53 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import './AdminOrders.css';
 
+const statusOptions = ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"];
+
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
+  const [editingId, setEditingId] = useState(null);
+  const [editStatus, setEditStatus] = useState("");
 
   useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  const fetchOrders = () => {
     axios.get("http://localhost:5000/api/orders", {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     .then(res => setOrders(res.data.orders || res.data))
     .catch(() => setOrders([]));
-  }, []);
+  };
+
+  const handleEdit = (order) => {
+    setEditingId(order.id);
+    setEditStatus(order.status);
+  };
+
+  const handleStatusChange = (e) => {
+    setEditStatus(e.target.value);
+  };
+
+  const handleEditSave = (id) => {
+    axios.put(`http://localhost:5000/api/orders/${id}`, { status: editStatus }, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    })
+    .then(() => {
+      setEditingId(null);
+      setEditStatus("");
+      fetchOrders();
+    });
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this order?')) {
+      axios.delete(`http://localhost:5000/api/orders/${id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+      })
+      .then(() => fetchOrders());
+    }
+  };
 
   return (
     <div className="admin-orders-container">
@@ -35,11 +72,29 @@ const AdminOrders = () => {
                 <td>{order.customer}</td>
                 <td>{order.total}</td>
                 <td>
-                  <span className={`order-status order-status-${order.status.toLowerCase()}`}>{order.status}</span>
+                  {editingId === order.id ? (
+                    <select value={editStatus} onChange={handleStatusChange}>
+                      {statusOptions.map(status => (
+                        <option key={status} value={status}>{status}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <span className={`order-status order-status-${order.status.toLowerCase()}`}>{order.status}</span>
+                  )}
                 </td>
                 <td>{order.date}</td>
                 <td>
-                  <button className="order-action-btn">View</button>
+                  {editingId === order.id ? (
+                    <>
+                      <button className="order-action-btn" onClick={() => handleEditSave(order.id)}>Save</button>
+                      <button className="order-action-btn" onClick={() => setEditingId(null)}>Cancel</button>
+                    </>
+                  ) : (
+                    <>
+                      <button className="order-action-btn" onClick={() => handleEdit(order)}>Edit</button>
+                      <button className="order-action-btn" onClick={() => handleDelete(order.id)}>Delete</button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}
