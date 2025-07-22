@@ -21,7 +21,7 @@ app.use(cors()); // Enable CORS for all routes and static files
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Serve uploads with CORS
+// Serve uploads with CORS and correct resource policy
 app.use('/uploads', (req, res, next) => {
   res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
   next();
