@@ -11,59 +11,95 @@ const categories = [
   'Grocery',
 ];
 
-const initialProducts = [
-  { id: 1, name: 'Apple', price: 1.2, stock: 100, description: 'Fresh apples', category: 'Fruits' },
-  { id: 2, name: 'Banana', price: 0.8, stock: 80, description: 'Organic bananas', category: 'Fruits' },
-  { id: 3, name: 'Milk', price: 2.5, stock: 50, description: 'Dairy milk', category: 'Dairy' },
-];
-
-const emptyForm = { name: '', price: '', stock: '', description: '', category: categories[0] };
+const emptyForm = { name: '', price: '', stock: '', description: '', category: categories[0], image: null };
 
 const AdminProducts = () => {
-  const [products, setProducts] = useState(initialProducts);
+  const [products, setProducts] = useState([]);
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState(emptyForm);
   const [categoryFilter, setCategoryFilter] = useState('All');
 
   useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = () => {
     axios.get("http://localhost:5000/api/products", {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     .then(res => setProducts(res.data.products || res.data))
     .catch(() => setProducts([]));
-  }, []);
+  };
+
+  // Handle image upload
+  const uploadImage = async (file) => {
+    const data = new FormData();
+    data.append('file', file);
+    const res = await axios.post('http://localhost:5000/api/file/upload', data, {
+      headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${localStorage.getItem("token")}` }
+    });
+    return res.data.url || res.data.path || res.data.filename || res.data.file; // Adjust based on backend response
+  };
 
   // Add product
-  const handleAdd = (e) => {
+  const handleAdd = async (e) => {
     e.preventDefault();
+    let imageUrl = '';
+    if (form.image) {
+      imageUrl = await uploadImage(form.image);
+    }
     const newProduct = {
       ...form,
-      id: Date.now(),
+      image: imageUrl,
       price: parseFloat(form.price),
       stock: parseInt(form.stock, 10),
     };
-    setProducts([...products, newProduct]);
-    setForm(emptyForm);
+    axios.post('http://localhost:5000/api/products', newProduct, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    }).then(() => {
+      setForm(emptyForm);
+      fetchProducts();
+    });
   };
 
   // Delete product
   const handleDelete = (id) => {
-    setProducts(products.filter(p => p.id !== id));
+    if (window.confirm('Are you sure you want to delete this product?')) {
+      axios.delete(`http://localhost:5000/api/products/${id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+      }).then(() => fetchProducts());
+    }
   };
 
   // Start editing
   const handleEdit = (product) => {
     setEditingId(product.id);
-    setEditForm({ ...product });
+    setEditForm({ ...product, image: null });
   };
 
   // Save edit
-  const handleEditSave = (e) => {
+  const handleEditSave = async (e) => {
     e.preventDefault();
-    setProducts(products.map(p => p.id === editingId ? { ...editForm, id: editingId } : p));
-    setEditingId(null);
-    setEditForm(emptyForm);
+    let imageUrl = editForm.image;
+    if (editForm.image && typeof editForm.image !== 'string') {
+      imageUrl = await uploadImage(editForm.image);
+    } else if (!editForm.image) {
+      imageUrl = products.find(p => p.id === editingId)?.image || '';
+    }
+    const updatedProduct = {
+      ...editForm,
+      image: imageUrl,
+      price: parseFloat(editForm.price),
+      stock: parseInt(editForm.stock, 10),
+    };
+    axios.put(`http://localhost:5000/api/products/${editingId}`, updatedProduct, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    }).then(() => {
+      setEditingId(null);
+      setEditForm(emptyForm);
+      fetchProducts();
+    });
   };
 
   // Filtered products
@@ -112,6 +148,11 @@ const AdminProducts = () => {
           onChange={e => setForm({ ...form, description: e.target.value })}
           required
         />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={e => setForm({ ...form, image: e.target.files[0] })}
+        />
         <button type="submit">Add Product</button>
       </form>
       <div className="category-filter-wrapper">
@@ -135,6 +176,7 @@ const AdminProducts = () => {
               <th>Price</th>
               <th>Stock</th>
               <th>Description</th>
+              <th>Image</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -159,6 +201,12 @@ const AdminProducts = () => {
                     <td><input type="number" value={editForm.stock} onChange={e => setEditForm({ ...editForm, stock: e.target.value })} /></td>
                     <td><input value={editForm.description} onChange={e => setEditForm({ ...editForm, description: e.target.value })} /></td>
                     <td>
+                      <input type="file" accept="image/*" onChange={e => setEditForm({ ...editForm, image: e.target.files[0] })} />
+                      {products.find(p => p.id === editingId)?.image && (
+                        <img src={products.find(p => p.id === editingId)?.image} alt="product" style={{ width: 40, height: 40 }} />
+                      )}
+                    </td>
+                    <td>
                       <button className="save-btn" onClick={handleEditSave}>Save</button>
                       <button className="cancel-btn" onClick={() => setEditingId(null)}>Cancel</button>
                     </td>
@@ -170,6 +218,7 @@ const AdminProducts = () => {
                     <td>${product.price}</td>
                     <td>{product.stock}</td>
                     <td>{product.description}</td>
+                    <td>{product.image && <img src={product.image} alt={product.name} style={{ width: 40, height: 40 }} />}</td>
                     <td>
                       <button className="edit-btn" onClick={() => handleEdit(product)}>Edit</button>
                       <button className="delete-btn" onClick={() => handleDelete(product.id)}>Delete</button>
