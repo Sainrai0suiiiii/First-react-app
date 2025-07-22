@@ -22,7 +22,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Serve uploads with CORS
-app.use('/uploads', cors(), express.static(path.join(process.cwd(), 'uploads')));
+app.use('/uploads', (req, res, next) => {
+  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+  next();
+}, express.static(path.join(process.cwd(), 'uploads')));
 
 // Public routes (no authentication required)
 app.use("/api/auth", authRouter);
