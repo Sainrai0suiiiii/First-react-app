@@ -35,7 +35,7 @@ const Login = () => {
       } else {
         navigate('/');
       }
-    } catch (err) {
+    } catch {
       setError('Invalid email or password');
     } finally {
       setLoading(false);

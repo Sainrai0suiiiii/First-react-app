@@ -10,7 +10,7 @@ const AdminUsers = () => {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     .then(res => setUsers(res.data.users || res.data))
-    .catch(err => setUsers([]));
+    .catch(() => setUsers([]));
   }, []);
 
   return (

@@ -31,7 +31,7 @@ const AdminProducts = () => {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     .then(res => setProducts(res.data.products || res.data))
-    .catch(err => setProducts([]));
+    .catch(() => setProducts([]));
   }, []);
 
   // Add product

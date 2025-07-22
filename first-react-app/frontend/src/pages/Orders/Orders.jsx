@@ -12,7 +12,7 @@ const Orders = () => {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     .then(res => setOrders(res.data.orders || res.data))
-    .catch(err => setOrders([]));
+    .catch(() => setOrders([]));
   }, []);
 
   // Mock order data

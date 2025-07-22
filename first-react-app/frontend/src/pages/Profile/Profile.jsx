@@ -13,8 +13,6 @@ const Profile = () => {
     phone: user?.phone || '',
     address: user?.address || ''
   });
-  const [saving, setSaving] = useState(false); // Added state for saving
-  const [saveMsg, setSaveMsg] = useState(''); // Added state for save message
 
   const handleChange = (e) => {
     setFormData({
@@ -24,16 +22,14 @@ const Profile = () => {
   };
 
   const handleSave = async () => {
-    setSaving(true);
     try {
       await axios.put("http://localhost:5000/api/users/profile", formData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       });
-      setSaveMsg("Profile updated successfully!");
-    } catch (err) {
-      setSaveMsg("Failed to update profile.");
+      // Optionally show a message to the user here
+    } catch {
+      // Optionally show an error message to the user here
     }
-    setSaving(false);
     setIsEditing(false);
   };
 
