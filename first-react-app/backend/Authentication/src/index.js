@@ -8,6 +8,7 @@ import { authenticateToken } from "./middleware/token-middleware.js";
 import { authRouter, cartRouter, orderRouter, productRouter, userRouter } from "./route/index.js";
 import router from "./route/uploadRoutes.js";
 import { createUploadsFolder } from "./security/helper.js";
+import path from 'path';
 
 dotenv.config();
 
@@ -22,6 +23,9 @@ app.use(cors({
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Serve uploads with CORS
+app.use('/uploads', cors(), express.static(path.join(process.cwd(), 'uploads')));
 
 // Public routes (no authentication required)
 app.use("/api/auth", authRouter);
