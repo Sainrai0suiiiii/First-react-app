@@ -34,7 +34,10 @@ const AdminUsers = () => {
     axios.get("http://localhost:5000/api/users", {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
-    .then(res => setUsers(res.data.users || res.data))
+    .then(res => {
+      const data = res.data.users || res.data;
+      setUsers(Array.isArray(data) ? data : []);
+    })
     .catch(() => setUsers([]));
   };
 
@@ -84,7 +87,7 @@ const AdminUsers = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map(user => (
+              {Array.isArray(users) && users.map(user => (
                 <tr key={user.id}>
                   <td>{user.id}</td>
                   <td>{editingId === user.id ? (
