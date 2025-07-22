@@ -17,10 +17,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors({
-  origin: 'http://localhost:5173', // Replace with your frontend URL in production
-  credentials: true // Only if you use cookies/sessions
-}));
+app.use(cors()); // Enable CORS for all routes and static files
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
