@@ -15,7 +15,7 @@ export const ProductProvider = ({ children }) => {
         name: 'Fresh Organic Apples',
         price: 250,
         category: 'Fruits',
-        image: 'https://images.pexels.com/photos/102104/pexels-photo-102104.jpeg?auto=compress&cs=tinysrgb&w=400',
+        image: 'http://localhost:5000/uploads/Apple.png',
         description: 'Fresh organic apples from Mustang valley',
         inStock: true,
         rating: 4.5
@@ -25,7 +25,7 @@ export const ProductProvider = ({ children }) => {
         name: 'Basmati Rice 5kg',
         price: 850,
         category: 'Grains',
-        image: 'https://images.pexels.com/photos/33783/rice-thailand-grain-food.jpg?auto=compress&cs=tinysrgb&w=400',
+        image: 'http://localhost:5000/uploads/BasmatiRice.jpg',
         description: 'Premium quality basmati rice',
         inStock: true,
         rating: 4.8
@@ -35,7 +35,7 @@ export const ProductProvider = ({ children }) => {
         name: 'Fresh Milk 1L',
         price: 80,
         category: 'Dairy',
-        image: 'https://images.pexels.com/photos/248412/pexels-photo-248412.jpeg?auto=compress&cs=tinysrgb&w=400',
+        image: 'http://localhost:5000/uploads/Yogurt.png',
         description: 'Fresh cow milk from local farms',
         inStock: true,
         rating: 4.3
@@ -45,7 +45,7 @@ export const ProductProvider = ({ children }) => {
         name: 'Chicken Breast 1kg',
         price: 650,
         category: 'Meat',
-        image: 'https://images.pexels.com/photos/616354/pexels-photo-616354.jpeg?auto=compress&cs=tinysrgb&w=400',
+        image: 'http://localhost:5000/uploads/ChickenSausage.jpg',
         description: 'Fresh chicken breast from local farms',
         inStock: true,
         rating: 4.6
@@ -55,7 +55,7 @@ export const ProductProvider = ({ children }) => {
         name: 'Mixed Vegetables',
         price: 180,
         category: 'Vegetables',
-        image: 'https://images.pexels.com/photos/1300972/pexels-photo-1300972.jpeg?auto=compress&cs=tinysrgb&w=400',
+        image: 'http://localhost:5000/uploads/Potato.jpg',
         description: 'Fresh mixed vegetables bundle',
         inStock: true,
         rating: 4.4
@@ -65,10 +65,20 @@ export const ProductProvider = ({ children }) => {
         name: 'Whole Wheat Bread',
         price: 120,
         category: 'Bakery',
-        image: 'https://images.pexels.com/photos/209206/pexels-photo-209206.jpeg?auto=compress&cs=tinysrgb&w=400',
+        image: 'http://localhost:5000/uploads/Bread.jpg',
         description: 'Fresh whole wheat bread',
         inStock: true,
         rating: 4.2
+      },
+      {
+        id: 7,
+        name: 'Beer',
+        price: 300,
+        category: 'Beverages',
+        image: 'http://localhost:5000/uploads/Beer.png',
+        description: 'Chilled beer',
+        inStock: true,
+        rating: 4.7
       }
     ];
 

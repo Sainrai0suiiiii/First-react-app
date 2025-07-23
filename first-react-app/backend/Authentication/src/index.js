@@ -8,6 +8,7 @@ import { authenticateToken } from "./middleware/token-middleware.js";
 import { authRouter, cartRouter, orderRouter, productRouter, userRouter } from "./route/index.js";
 import router from "./route/uploadRoutes.js";
 import { createUploadsFolder } from "./security/helper.js";
+import path from 'path';
 
 dotenv.config();
 
@@ -16,12 +17,15 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors({
-  origin: 'http://localhost:5173', // Replace with your frontend URL in production
-  credentials: true // Only if you use cookies/sessions
-}));
+app.use(cors()); // Enable CORS for all routes and static files
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Serve uploads with CORS and correct resource policy
+app.use('/uploads', (req, res, next) => {
+  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+  next();
+}, express.static(path.join(process.cwd(), 'uploads')));
 
 // Public routes (no authentication required)
 app.use("/api/auth", authRouter);

@@ -17,7 +17,7 @@ const AdminSettings = () => {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     .then(res => setSettings(res.data.settings || res.data))
-    .catch(err => {/* handle error */});
+    .catch(() => {/* handle error */});
   }, []);
 
   const handleChange = (e) => {

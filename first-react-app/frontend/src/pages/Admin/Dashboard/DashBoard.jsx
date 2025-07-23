@@ -2,20 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import './DashBoard.css';
 
-const summary = [
-  { label: 'Products', value: 128, icon: '📦', color: '#22c55e' },
-  { label: 'Orders', value: 312, icon: '🛒', color: '#3b82f6' },
-  { label: 'Users', value: 87, icon: '👤', color: '#f59e42' },
-  { label: 'Revenue', value: '$12,340', icon: '💰', color: '#f43f5e' },
-];
-
-const recentOrders = [
-  { id: 1, customer: 'Alice', total: '$120', status: 'Delivered', date: '2024-06-01' },
-  { id: 2, customer: 'Bob', total: '$80', status: 'Pending', date: '2024-06-02' },
-  { id: 3, customer: 'Charlie', total: '$45', status: 'Shipped', date: '2024-06-03' },
-  { id: 4, customer: 'Diana', total: '$210', status: 'Delivered', date: '2024-06-04' },
-];
-
 const DashBoard = () => {
   const [summary, setSummary] = useState([]);
   const [recentOrders, setRecentOrders] = useState([]);
@@ -25,13 +11,13 @@ const DashBoard = () => {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     .then(res => setSummary(res.data.summary || res.data))
-    .catch(err => setSummary([]));
+    .catch(() => setSummary([]));
 
     axios.get("http://localhost:5000/api/orders", {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     .then(res => setRecentOrders(res.data.orders || res.data))
-    .catch(err => setRecentOrders([]));
+    .catch(() => setRecentOrders([]));
   }, []);
 
   return (

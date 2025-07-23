@@ -48,7 +48,7 @@ const Register = () => {
     try {
       await register(formData);
       navigate('/');
-    } catch (err) {
+    } catch {
       setError('Registration failed. Please try again.');
     } finally {
       setLoading(false);

@@ -7,7 +7,7 @@ import {
     ShoppingCart,
     Users
 } from 'lucide-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import './AdminLayout.css';
@@ -16,6 +16,12 @@ const AdminLayout = () => {
   const { user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user || user.role !== 'admin') {
+      navigate('/login');
+    }
+  }, [user, navigate]);
 
   const menuItems = [
     {
