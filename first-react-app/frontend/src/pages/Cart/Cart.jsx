@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
+import { getImageUrl } from '../../utils/helpers';
 import './Cart.css';
 
 const Cart = () => {
@@ -62,7 +63,7 @@ const Cart = () => {
             {items.map(item => (
               <div key={item.id} className="cart-item">
                 <div className="item-image">
-                  <img src={item.image} alt={item.name} />
+                  <img src={getImageUrl(item.image, '/default-product.png')} alt={item.name} />
                 </div>
                 
                 <div className="item-details">

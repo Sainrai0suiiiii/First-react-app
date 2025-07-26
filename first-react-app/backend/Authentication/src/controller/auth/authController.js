@@ -2,15 +2,53 @@ import bcrypt from "bcryptjs";
 import { User } from "../../models/index.js";
 import { generateToken } from "../../security/jwt-util.js";
 
+// Email validation regex
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Password strength validation
+const validatePassword = (password) => {
+  const minLength = 6;
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasLowerCase = /[a-z]/.test(password);
+  const hasNumbers = /\d/.test(password);
+  
+  if (password.length < minLength) {
+    return { isValid: false, error: `Password must be at least ${minLength} characters long` };
+  }
+  
+  if (!hasUpperCase || !hasLowerCase || !hasNumbers) {
+    return { isValid: false, error: 'Password must contain uppercase, lowercase, and numbers' };
+  }
+  
+  return { isValid: true };
+};
+
 const register = async (req, res) => {
   try {
-    const { name, email, password,role } = req.body;
+    const { name, email, password, phone, address, role = 'user' } = req.body;
     
-    // Validation
+    // Enhanced validation
     if (!name || !email || !password) {
       return res.status(400).json({ 
         success: false,
-        error: "All fields are required" 
+        error: "Name, email, and password are required" 
+      });
+    }
+    
+    // Validate email format
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        success: false,
+        error: "Please enter a valid email address"
+      });
+    }
+    
+    // Validate password strength
+    const passwordValidation = validatePassword(password);
+    if (!passwordValidation.isValid) {
+      return res.status(400).json({
+        success: false,
+        error: passwordValidation.error
       });
     }
     
@@ -19,28 +57,43 @@ const register = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ 
         success: false,
-        error: "User already exists" 
+        error: "User with this email already exists" 
       });
     }
     
     // Hash password
-    const saltRounds = 10;
+    const saltRounds = 12; // Increased from 10 for better security
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     
     // Create user
     const user = await User.create({
-      name,
-      email,
-      password: hashedPassword
+      name: name.trim(),
+      email: email.toLowerCase().trim(),
+      password: hashedPassword,
+      phone: phone?.trim() || null,
+      address: address?.trim() || null,
+      role
     });
     
     // Generate token
-    const token = generateToken({ id: user.id, name: user.name, email: user.email, role: user.role });
+    const token = generateToken({ 
+      id: user.id, 
+      name: user.name, 
+      email: user.email, 
+      role: user.role 
+    });
     
     res.status(201).json({
       success: true,
       data: { 
-        user: { id: user.id, name: user.name, email: user.email,role:user.role },
+        user: { 
+          id: user.id, 
+          name: user.name, 
+          email: user.email, 
+          role: user.role,
+          phone: user.phone,
+          address: user.address
+        },
         access_token: token 
       },
       message: "User registered successfully"
@@ -49,7 +102,7 @@ const register = async (req, res) => {
     console.error('Registration error:', error);
     res.status(500).json({ 
       success: false,
-      error: "Failed to register user" 
+      error: "Failed to register user. Please try again." 
     });
   }
 };
@@ -58,7 +111,7 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     
-    // Validation
+    // Enhanced validation
     if (!email || !password) {
       return res.status(400).json({ 
         success: false,
@@ -66,12 +119,23 @@ const login = async (req, res) => {
       });
     }
     
+    // Validate email format
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        success: false,
+        error: "Please enter a valid email address"
+      });
+    }
+    
     // Find user
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ 
+      where: { email: email.toLowerCase().trim() } 
+    });
+    
     if (!user) {
       return res.status(401).json({ 
         success: false,
-        error: "Invalid credentials" 
+        error: "Invalid email or password" 
       });
     }
     
@@ -80,17 +144,33 @@ const login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ 
         success: false,
-        error: "Invalid credentials" 
+        error: "Invalid email or password" 
       });
     }
     
+    // Update last login time
+    await user.update({ lastLoginAt: new Date() });
+    
     // Generate token
-    const token = generateToken({ id: user.id, name: user.name, email: user.email, role: user.role });
+    const token = generateToken({ 
+      id: user.id, 
+      name: user.name, 
+      email: user.email, 
+      role: user.role 
+    });
     
     res.status(200).json({
       success: true,
       data: { 
-        user: { id: user.id, name: user.name, email: user.email },
+        user: { 
+          id: user.id, 
+          name: user.name, 
+          email: user.email, 
+          role: user.role,
+          phone: user.phone,
+          address: user.address,
+          lastLoginAt: user.lastLoginAt
+        },
         access_token: token 
       },
       message: "Successfully logged in"
@@ -99,25 +179,77 @@ const login = async (req, res) => {
     console.error('Login error:', error);
     res.status(500).json({ 
       success: false,
-      error: "Failed to login" 
+      error: "Failed to login. Please try again." 
     });
   }
 };
 
-const init = async (req, res) => {
+const getCurrentUser = async (req, res) => {
   try {
-    const user = req.user.user;
-    delete user.password;
-    res.status(200).json({ 
+    const userId = req.user.id;
+    const user = await User.findByPk(userId, {
+      attributes: { exclude: ['password'] }
+    });
+    
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: "User not found"
+      });
+    }
+    
+    res.status(200).json({
       success: true,
-      data: user, 
-      message: "Successfully fetched current user" 
+      data: user,
+      message: "User profile retrieved successfully"
     });
   } catch (error) {
-    console.error('Init error:', error);
-    res.status(500).json({ 
+    console.error('Get current user error:', error);
+    res.status(500).json({
       success: false,
-      error: "Failed to fetch user" 
+      error: "Failed to retrieve user profile"
+    });
+  }
+};
+
+const updateProfile = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { name, phone, address } = req.body;
+    
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: "User not found"
+      });
+    }
+    
+    // Update user fields
+    const updateData = {};
+    if (name) updateData.name = name.trim();
+    if (phone) updateData.phone = phone.trim();
+    if (address) updateData.address = address.trim();
+    
+    await user.update(updateData);
+    
+    res.status(200).json({
+      success: true,
+      data: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        phone: user.phone,
+        address: user.address
+      },
+      message: "Profile updated successfully"
+    });
+  } catch (error) {
+    console.error('Update profile error:', error);
+    res.status(500).json({
+      success: false,
+      error: "Failed to update profile"
     });
   }
 };
@@ -125,5 +257,6 @@ const init = async (req, res) => {
 export const authController = {
   register,
   login,
-  init,
+  getCurrentUser,
+  updateProfile,
 };

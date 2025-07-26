@@ -1,30 +1,37 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import ProductCard from "../../components/ProductCard/ProductCard";
+import { apiService } from "../../utils/api.js";
+import "./Products.css";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/products")
+    apiService.getProducts()
       .then(response => {
-        setProducts(response.data.products || response.data); // adjust if your API returns differently
+        setProducts(response.data.data);
         setLoading(false);
       })
       .catch(error => {
-        console.error("Error fetching products:", error);
+        console.error('Error fetching products:', error);
+        setProducts([]);
         setLoading(false);
       });
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="products-loading">Loading products...</div>;
 
   return (
-    <ul>
-      {products.map(product => (
-        <li key={product.id}>{product.name}</li>
-      ))}
-    </ul>
+    <div className="product-grid">
+      {Array.isArray(products) && products.length > 0 ? (
+        products.map(product => (
+          <ProductCard key={product.id} product={product} />
+        ))
+      ) : (
+        <div className="products-empty">No products found or error fetching products.</div>
+      )}
+    </div>
   );
 };
 

@@ -1,0 +1,120 @@
+/* Loading Container */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  width: 100%;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  font-size: 14px;
+  color: #666;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Auth Required Container */
+.auth-required-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 2rem;
+  background-color: #f8f9fa;
+}
+
+.auth-required-card {
+  background: white;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.auth-required-card h2 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.auth-required-card p {
+  color: #666;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.auth-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.auth-actions .btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  min-width: 100px;
+}
+
+.auth-actions .btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.auth-actions .btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.auth-actions .btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.auth-actions .btn-secondary:hover {
+  background-color: #545b62;
+}
+
+/* Product Card Login Required Button */
+.add-to-cart-btn.login-required {
+  background-color: #6c757d;
+  color: white;
+}
+
+.add-to-cart-btn.login-required:hover {
+  background-color: #545b62;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .auth-required-card {
+    padding: 2rem;
+    margin: 1rem;
+  }
+  
+  .auth-actions {
+    flex-direction: column;
+  }
+  
+  .auth-actions .btn {
+    width: 100%;
+  }
+} 

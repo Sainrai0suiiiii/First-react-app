@@ -14,15 +14,18 @@ export const sequelize = new Sequelize(
   }
 );
 
-export const db = () => {
+export const db = async () => {
   try {
-    sequelize.sync({alter:true})
-    console.log("database connected successfully")
-
-  } catch (e) {
-    console.error("fail to connect database successfully",e)
+    await sequelize.authenticate();
+    console.log("Database connection established successfully");
+    
+    await sequelize.sync({ alter: true });
+    console.log("Database synchronized successfully");
+  } catch (error) {
+    console.error("Failed to connect to database:", error.message);
+    process.exit(1); // Exit if database connection fails
   }
-}
+};
 
 
 

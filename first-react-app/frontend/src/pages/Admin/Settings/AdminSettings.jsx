@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import './AdminSettings.css';
 
 const initialSettings = {
@@ -13,7 +13,7 @@ const AdminSettings = () => {
   const [settings, setSettings] = useState(initialSettings);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/settings", {
+    axios.get("http://localhost:5001/api/v1/settings", {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     .then(res => setSettings(res.data.settings || res.data))
@@ -30,7 +30,7 @@ const AdminSettings = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.put("http://localhost:5000/api/settings", settings, {
+    axios.put("http://localhost:5001/api/v1/settings", settings, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
     .then(() => alert("Settings saved!"))

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { CheckCircle, Clock, Eye, Package, XCircle } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Orders.css';
 
 const Orders = () => {
@@ -8,58 +8,22 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/orders", {
+    axios.get("http://localhost:5001/api/v1/orders", {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
-    .then(res => setOrders(res.data.orders || res.data))
-    .catch(err => setOrders([]));
+    .then(res => {
+      // Ensure orders is always an array
+      const apiOrders = Array.isArray(res.data.orders) ? res.data.orders : [];
+      setOrders(apiOrders);
+    })
+    .catch(() => setOrders([]));
   }, []);
-
-  // Mock order data
-  // const orders = [
-  //   {
-  //     id: '#ORD-001',
-  //     date: '2024-01-15',
-  //     status: 'Delivered',
-  //     total: 1250,
-  //     items: 8,
-  //     deliveryTime: '25 mins',
-  //     products: ['Organic Apples', 'Fresh Milk', 'Basmati Rice']
-  //   },
-  //   {
-  //     id: '#ORD-002',
-  //     date: '2024-01-12',
-  //     status: 'Processing',
-  //     total: 850,
-  //     items: 5,
-  //     deliveryTime: '30 mins',
-  //     products: ['Chicken Breast', 'Mixed Vegetables', 'Whole Wheat Bread']
-  //   },
-  //   {
-  //     id: '#ORD-003',
-  //     date: '2024-01-10',
-  //     status: 'Delivered',
-  //     total: 1650,
-  //     items: 12,
-  //     deliveryTime: '28 mins',
-  //     products: ['Fresh Fruits Bundle', 'Dairy Products', 'Meat Package']
-  //   },
-  //   {
-  //     id: '#ORD-004',
-  //     date: '2024-01-08',
-  //     status: 'Cancelled',
-  //     total: 420,
-  //     items: 3,
-  //     deliveryTime: '-',
-  //     products: ['Organic Vegetables', 'Fresh Herbs']
-  //   }
-  // ];
 
   const statusFilters = ['All', 'Processing', 'Delivered', 'Cancelled'];
 
-  const filteredOrders = selectedStatus === 'All' 
-    ? orders 
-    : orders.filter(order => order.status === selectedStatus);
+  const filteredOrders = selectedStatus === 'All'
+    ? (Array.isArray(orders) ? orders : [])
+    : (Array.isArray(orders) ? orders.filter(order => order.status === selectedStatus) : []);
 
   const getStatusIcon = (status) => {
     switch (status) {
@@ -110,15 +74,19 @@ const Orders = () => {
         <div className="orders-summary">
           <div className="summary-stats">
             <div className="stat-item">
-              <span className="stat-value">{orders.length}</span>
+              <span className="stat-value">{Array.isArray(orders) ? orders.length : 0}</span>
               <span className="stat-label">Total Orders</span>
             </div>
             <div className="stat-item">
-              <span className="stat-value">₹{orders.reduce((sum, order) => sum + order.total, 0)}</span>
+              <span className="stat-value">
+                ₹{Array.isArray(orders) ? orders.reduce((sum, order) => sum + (order.total || 0), 0) : 0}
+              </span>
               <span className="stat-label">Total Spent</span>
             </div>
             <div className="stat-item">
-              <span className="stat-value">{orders.filter(o => o.status === 'Delivered').length}</span>
+              <span className="stat-value">
+                {Array.isArray(orders) ? orders.filter(o => o.status === 'Delivered').length : 0}
+              </span>
               <span className="stat-label">Completed</span>
             </div>
           </div>
@@ -149,30 +117,32 @@ const Orders = () => {
                   <div className="order-info">
                     <div className="info-item">
                       <span className="info-label">Order Date:</span>
-                      <span className="info-value">{new Date(order.date).toLocaleDateString()}</span>
+                      <span className="info-value">
+                        {order.date ? new Date(order.date).toLocaleDateString() : 'N/A'}
+                      </span>
                     </div>
                     <div className="info-item">
                       <span className="info-label">Items:</span>
-                      <span className="info-value">{order.items} items</span>
+                      <span className="info-value">{order.items || 0} items</span>
                     </div>
                     <div className="info-item">
                       <span className="info-label">Delivery Time:</span>
-                      <span className="info-value">{order.deliveryTime}</span>
+                      <span className="info-value">{order.deliveryTime || 'N/A'}</span>
                     </div>
                     <div className="info-item">
                       <span className="info-label">Total:</span>
-                      <span className="info-value total-amount">₹{order.total}</span>
+                      <span className="info-value total-amount">₹{order.total || 0}</span>
                     </div>
                   </div>
 
                   <div className="order-products">
                     <h4>Products:</h4>
                     <div className="products-list">
-                      {order.products.map((product, index) => (
+                      {(order.products && Array.isArray(order.products)) ? order.products.map((product, index) => (
                         <span key={index} className="product-tag">
                           {product}
                         </span>
-                      ))}
+                      )) : <span className="product-tag">No products</span>}
                     </div>
                   </div>
                 </div>

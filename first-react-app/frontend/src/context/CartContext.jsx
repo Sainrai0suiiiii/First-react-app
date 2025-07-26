@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
+import { useAuth } from './AuthContext';
 
 const CartContext = createContext();
 
@@ -43,6 +44,12 @@ const cartReducer = (state, action) => {
         items: []
       };
     
+    case 'SET_CART':
+      return {
+        ...state,
+        items: action.payload
+      };
+    
     default:
       return state;
   }
@@ -53,16 +60,26 @@ export const CartProvider = ({ children }) => {
     items: [],
     isOpen: false
   });
+  const { user } = useAuth();
 
   const addItem = (item) => {
+    if (!user) {
+      throw new Error('Please login to add items to cart');
+    }
     dispatch({ type: 'ADD_ITEM', payload: item });
   };
 
   const removeItem = (id) => {
+    if (!user) {
+      throw new Error('Please login to manage your cart');
+    }
     dispatch({ type: 'REMOVE_ITEM', payload: id });
   };
 
   const updateQuantity = (id, quantity) => {
+    if (!user) {
+      throw new Error('Please login to manage your cart');
+    }
     if (quantity <= 0) {
       removeItem(id);
     } else {
@@ -71,6 +88,9 @@ export const CartProvider = ({ children }) => {
   };
 
   const clearCart = () => {
+    if (!user) {
+      throw new Error('Please login to manage your cart');
+    }
     dispatch({ type: 'CLEAR_CART' });
   };
 
@@ -82,6 +102,10 @@ export const CartProvider = ({ children }) => {
     return state.items.reduce((total, item) => total + (item.price * item.quantity), 0);
   };
 
+  const isAuthenticated = () => {
+    return !!user;
+  };
+
   return (
     <CartContext.Provider value={{
       items: state.items,
@@ -91,7 +115,8 @@ export const CartProvider = ({ children }) => {
       updateQuantity,
       clearCart,
       getTotalItems,
-      getTotalPrice
+      getTotalPrice,
+      isAuthenticated
     }}>
       {children}
     </CartContext.Provider>
