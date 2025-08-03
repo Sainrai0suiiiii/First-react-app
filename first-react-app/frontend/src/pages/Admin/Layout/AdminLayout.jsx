@@ -56,7 +56,7 @@ const AdminLayout = () => {
         <div className="sidebar-header">
           <Link to="/admin/dashboard" className="sidebar-logo">
             <ShoppingBag className="logo-icon" />
-            <span>FreshMart Admin</span>
+            <span>Valley-Fresh Admin</span>
           </Link>
         </div>
 

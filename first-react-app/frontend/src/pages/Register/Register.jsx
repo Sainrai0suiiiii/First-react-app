@@ -1,5 +1,5 @@
 import { Eye, EyeOff, Lock, Mail, MapPin, Phone, User } from 'lucide-react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './Register.css';
@@ -61,7 +61,7 @@ const Register = () => {
         <div className="register-container">
           <div className="register-header">
             <div className="logo">
-              <span className="logo-icon">🏔️</span>
+              <span className="logo-icon"></span>
               <span className="logo-text">Valley Fresh</span>
             </div>
             <h1>Create Account</h1>

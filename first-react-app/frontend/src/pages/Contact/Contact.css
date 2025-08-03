@@ -4,7 +4,7 @@
   
   .contact-hero {
     background: linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(37, 99, 235, 0.9)),
-                url('https://images.pexels.com/photos/5077040/pexels-photo-5077040.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover;
+                url('/public/contact.jpg') center/cover;
     color: white;
     padding: 4rem 0;
     text-align: center;

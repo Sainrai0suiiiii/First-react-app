@@ -1,5 +1,5 @@
-import { Menu, Search, ShoppingCart, User, X } from 'lucide-react';
-import React, { useState } from 'react';
+import { Leaf, Menu, Search, ShoppingCart, User, X } from 'lucide-react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
@@ -25,42 +25,17 @@ const Header = () => {
     navigate('/');
   };
 
-  const categories = [
-    'Fruits',
-    'Dairy',
-    'Beverages',
-    'Vegetables',
-    'Meat',
-    'Grocery',
-  ];
-
   return (
     <header className="header">
       <div className="container">
         <div className="header-content">
           <Link to="/" className="logo">
-            <div className="logo-icon">🏔️</div>
+            <div className="logo-icon"><Leaf size={28} color="#22c55e" /></div>
             <span className="logo-text">Valley Fresh</span>
           </Link>
 
           <nav className={`nav ${isMenuOpen ? 'nav-open' : ''}`}>
             <Link to="/" className="nav-link">Home</Link>
-            <div className="nav-dropdown">
-              <button className="nav-link nav-dropdown-btn" tabIndex={0}>
-                Categories
-              </button>
-              <div className="nav-dropdown-content">
-                {categories.map(cat => (
-                  <Link
-                    key={cat}
-                    to={`/products?category=${encodeURIComponent(cat)}`}
-                    className="dropdown-link"
-                  >
-                    {cat}
-                  </Link>
-                ))}
-              </div>
-            </div>
             <Link to="/products" className="nav-link">Products</Link>
             <Link to="/about" className="nav-link">About</Link>
             <Link to="/contact" className="nav-link">Contact</Link>

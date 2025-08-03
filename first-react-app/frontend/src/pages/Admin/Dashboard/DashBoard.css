@@ -1,3 +1,28 @@
+/* Valley-Fresh Admin Dashboard Enhancements */
+.dashboard-header {
+  background: linear-gradient(90deg, #2a4066 0%, #34495e 100%);
+  color: #fff;
+  padding: 2rem 2rem 1.2rem 2rem;
+  border-radius: 16px 16px 0 0;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 12px rgba(30,41,59,0.10);
+}
+
+/* Example sidebar styles (add to your sidebar component CSS if not present) */
+.dashboard-sidebar-link {
+  color: #334155;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  display: block;
+  transition: background 0.2s, color 0.2s;
+}
+.dashboard-sidebar-link:hover,
+.dashboard-sidebar-link.active {
+  background: #f4a261;
+  color: #fff;
+}
 .dashboard-container {
   padding: 2.5rem 2rem;
   max-width: 1200px;

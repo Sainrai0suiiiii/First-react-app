@@ -9,7 +9,7 @@ const Hero = () => {
       <div className="hero-background">
         <div className="hero-overlay"></div>
         <img 
-          src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          src="/background.jpg"
           alt="Fresh groceries"
           className="hero-image"
         />
